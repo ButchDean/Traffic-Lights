@@ -36,8 +36,8 @@ private:
 
 	CLightsStatus()
 	{
-		systemStatus ^= ZERO;
-		lightsCycled ^= ZERO;
+		systemStatus ^= systemStatus;
+		lightsCycled ^= lightsCycled;
 	}
 
 	unsigned char systemStatus;
