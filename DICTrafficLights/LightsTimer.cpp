@@ -14,7 +14,11 @@ static time_t GetTimeDiff()
 
 int TimeElapsed(time_t secs)
 {
-	// Implement.
+	if(GetTimeDiff() >= secs)
+	{
+		lastTime = currentTime;
+		return 1;
+	}
 
 	return 0;
 }

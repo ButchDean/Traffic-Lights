@@ -8,11 +8,11 @@ using namespace std;
 
 static HANDLE hConsole;
 
-const char trafficLightFrame[] = "\n - \n|*|\n - \n - \n";
+const char trafficLightFrame[] = "\n - \n|*|\n - \n|*|\n - \n|*|\n - \n";
 
 static void ClearScreen()
 {
-    COORD coordScreen = {0, 0};    
+    COORD coordScreen = { 0, 0 };    
 
     DWORD cCharsWritten;
     CONSOLE_SCREEN_BUFFER_INFO csbi; 
@@ -36,17 +36,86 @@ static void ClearScreen()
 
 static void ConfigureLightsAndDisplay(char* lights, int lightSet)
 {
-	// Implement.
+	for(unsigned int ch = 0; ch < strlen(trafficLightFrame); ch++)
+	{
+		switch(ch)
+		{
+		case 6:
+			if(CLightsStatus::StatusDetail()->GetStatusRed(lightSet))
+				SetConsoleTextAttribute(hConsole, RED);
+			else
+				SetConsoleTextAttribute(hConsole, NULL);
+			break;
+		case 14:
+			if(CLightsStatus::StatusDetail()->GetStatusAmber(lightSet))
+				SetConsoleTextAttribute(hConsole, AMBER);
+			else
+				SetConsoleTextAttribute(hConsole, NULL);
+			break;
+		case 22:
+			if(CLightsStatus::StatusDetail()->GetStatusGreen(lightSet))
+				SetConsoleTextAttribute(hConsole, GREEN);
+			else
+				SetConsoleTextAttribute(hConsole, NULL);
+			break;
+		default:
+			SetConsoleTextAttribute(hConsole, BACKGROUND_BLUE);
+			break;
+		}
+
+		putchar(lights[ch]);
+	}
+
 }
 
 void CConsoleOutput::UpdateDisplay(const int set)
 {
-	// Implement.
+	if(CLightsStatus::StatusDetail()->GetStatusGreen(set))
+	{
+		CLightsStatus::StatusDetail()->ClearStatusGreen(set);
+		CLightsStatus::StatusDetail()->SetStatusAmber(set);
+	}
+	else
+	if(CLightsStatus::StatusDetail()->GetStatusRed(set) && 
+		CLightsStatus::StatusDetail()->GetStatusAmber(set))
+	{
+		CLightsStatus::StatusDetail()->ClearStatusRed(set);
+		CLightsStatus::StatusDetail()->ClearStatusAmber(set);
+		CLightsStatus::StatusDetail()->SetStatusGreen(set);
+	}
+	else
+	if(CLightsStatus::StatusDetail()->GetStatusRed(set) && 
+		!CLightsStatus::StatusDetail()->GetStatusAmber(set))
+	{
+		CLightsStatus::StatusDetail()->SetStatusAmber(set);
+	}
+	else
+	if(CLightsStatus::StatusDetail()->GetStatusAmber(set))
+	{
+		CLightsStatus::StatusDetail()->ClearStatusAmber(set);
+		CLightsStatus::StatusDetail()->SetStatusRed(set);
+	}
 }
 
 void CConsoleOutput::OutputDisplay()
 {
 	ClearScreen();
 
-	// Implement.
+	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	assert(hConsole != INVALID_HANDLE_VALUE || hConsole != NULL);
+
+	SetConsoleTextAttribute(hConsole, BACKGROUND_BLUE);
+
+	char lightsBuf[MAXBUF] = {0};
+
+	{
+		strcpy((char*)&lightsBuf, (char*)&trafficLightFrame);
+		ConfigureLightsAndDisplay(lightsBuf, 0);
+	}
+
+	{
+		strcpy((char*)&lightsBuf, (char*)&trafficLightFrame);
+		ConfigureLightsAndDisplay(lightsBuf, 1);
+	}
 }

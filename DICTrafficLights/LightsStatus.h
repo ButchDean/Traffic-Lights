@@ -32,6 +32,11 @@ public:
 
 	int LightsCycled(int lSet);
 
+	unsigned char GetSystemStatus() const
+	{
+		return systemStatus;
+	}
+
 private:
 
 	CLightsStatus()
