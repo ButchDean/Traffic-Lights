@@ -7,7 +7,7 @@ static time_t currentTime = 0;
 
 static time_t GetTimeDiff()
 {
-	currentTime = time(0)
+	currentTime = time(0);
 
 	return currentTime - lastTime;
 }
@@ -15,4 +15,6 @@ static time_t GetTimeDiff()
 int TimeElapsed(time_t secs)
 {
 	// Implement.
+
+	return 0;
 }

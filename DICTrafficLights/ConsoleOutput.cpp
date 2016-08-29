@@ -18,7 +18,7 @@ static void ClearScreen()
     CONSOLE_SCREEN_BUFFER_INFO csbi; 
     DWORD conSize;                 
 	
-	SetConsoleTextAtribute(hConsole, 0);
+	SetConsoleTextAttribute(hConsole, 0);
 
     GetConsoleScreenBufferInfo(hConsole, &csbi);
     conSize = csbi.dwSize.X * csbi.dwSize.Y;
@@ -29,7 +29,7 @@ static void ClearScreen()
     GetConsoleScreenBufferInfo(hConsole, &csbi);
 
     FillConsoleOutputAttribute(hConsole, csbi.wAttributes,
-       conSize, coordScreen, &cCharsWriten);
+       conSize, coordScreen, &cCharsWritten);
 
     SetConsoleCursorPosition(hConsole, coordScreen );
 }

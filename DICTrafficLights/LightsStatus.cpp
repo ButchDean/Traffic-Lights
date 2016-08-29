@@ -43,16 +43,22 @@ void CLightsStatus::ClearStatusGreen(const int lights)
 bool CLightsStatus::GetStatusRed(const int lights) const
 {
 	// Implement.
+
+	return false;
 }
 
 bool CLightsStatus::GetStatusAmber(const int lights) const
 {
 	// Implement.
+
+	return false;
 }
 
 bool CLightsStatus::GetStatusGreen(const int lights) const
 {
 	// Implement.
+
+	return false;
 }
 
 int CLightsStatus::LightsCycled(int lSet)
