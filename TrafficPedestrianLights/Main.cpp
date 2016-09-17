@@ -6,8 +6,8 @@ using namespace std;
 #include "LightsStatus.h"
 #include "LightsTimer.h"
 
-#define LIGHTSTATUS		CLightsStatus::StatusDetail()
-#define LIGHTSDISPLAY	CConsoleOutput::ConsoleInst()
+#define LIGHTSTATUS		Signals::CLightsStatus::StatusDetail()
+#define LIGHTSDISPLAY	Console::CConsoleOutput::ConsoleInst()
 
 int main()
 {

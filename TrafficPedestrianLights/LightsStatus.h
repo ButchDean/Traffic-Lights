@@ -3,54 +3,57 @@
 
 #define ZERO					0x00
 
-class CLightsStatus
+namespace Signals
 {
-public:
-
-	static CLightsStatus* StatusDetail()
+	class CLightsStatus
 	{
-		static CLightsStatus ls;
+	public:
 
-		return &ls;
-	}
+		static CLightsStatus* StatusDetail()
+		{
+			static CLightsStatus ls;
 
-	~CLightsStatus(){}
+			return &ls;
+		}
 
-	bool SystemIsReset();
+		~CLightsStatus() {}
 
-	void SetStatusWalk(const int lights);
-	void SetStatusRed(const int lights);
-	void SetStatusAmber(const int lights);
-	void SetStatusGreen(const int lights);
+		bool SystemIsReset();
 
-	void ClearStatusWalk(const int lights);
-	void ClearStatusRed(const int lights);
-	void ClearStatusAmber(const int lights);
-	void ClearStatusGreen(const int lights);
+		void SetStatusWalk(const int lights);
+		void SetStatusRed(const int lights);
+		void SetStatusAmber(const int lights);
+		void SetStatusGreen(const int lights);
 
-	bool GetStatusWalk(const int lights) const;
-	bool GetStatusRed(const int lights) const;
-	bool GetStatusAmber(const int lights) const;
-	bool GetStatusGreen(const int lights) const;
+		void ClearStatusWalk(const int lights);
+		void ClearStatusRed(const int lights);
+		void ClearStatusAmber(const int lights);
+		void ClearStatusGreen(const int lights);
 
-	int LightsCycled(int lSet);
+		bool GetStatusWalk(const int lights) const;
+		bool GetStatusRed(const int lights) const;
+		bool GetStatusAmber(const int lights) const;
+		bool GetStatusGreen(const int lights) const;
 
-	unsigned char GetSystemStatus() const
-	{
-		return systemStatus;
-	}
+		int LightsCycled(int lSet);
 
-private:
+		unsigned char GetSystemStatus() const
+		{
+			return systemStatus;
+		}
 
-	CLightsStatus()
-	{
-		systemStatus ^= systemStatus;
-		lightsCycled ^= lightsCycled;
-	}
+	private:
 
-	unsigned char systemStatus;
-	unsigned char lightsCycled;
+		CLightsStatus()
+		{
+			systemStatus ^= systemStatus;
+			lightsCycled ^= lightsCycled;
+		}
 
-};
+		unsigned char systemStatus;
+		unsigned char lightsCycled;
+
+	};
+}
 
 #endif

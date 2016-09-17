@@ -18,13 +18,13 @@
     <ClCompile Include="ConsoleOutput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Core.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="LightsStatus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LightsTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

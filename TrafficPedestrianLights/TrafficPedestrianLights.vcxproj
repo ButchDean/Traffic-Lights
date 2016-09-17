@@ -94,7 +94,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleOutput.cpp" />
-    <ClCompile Include="Core.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="LightsStatus.cpp" />
     <ClCompile Include="LightsTimer.cpp" />
   </ItemGroup>

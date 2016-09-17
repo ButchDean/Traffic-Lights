@@ -11,25 +11,27 @@
 #define AMBER	FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY
 #define GREEN	FOREGROUND_GREEN | FOREGROUND_INTENSITY
 
-class CConsoleOutput
+namespace Console
 {
-public:
-
-	static CConsoleOutput* ConsoleInst()
+	class CConsoleOutput
 	{
-		static CConsoleOutput ci;
+	public:
 
-		return &ci;
-	}
+		static CConsoleOutput* ConsoleInst()
+		{
+			static CConsoleOutput ci;
 
-	~CConsoleOutput(){}
+			return &ci;
+		}
 
-	void UpdateDisplay(const int set);
-	void OutputDisplay();
+		~CConsoleOutput() {}
 
-private:
+		void UpdateDisplay(const int set);
+		void OutputDisplay();
 
-	CConsoleOutput(){}
-};
+	private:
 
+		CConsoleOutput() {}
+	};
+}
 #endif
