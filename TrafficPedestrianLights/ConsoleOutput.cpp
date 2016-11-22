@@ -6,9 +6,9 @@
 #include <iostream>
 using namespace std;
 
-static HANDLE hConsole;
+HANDLE hConsole;
 
-const char trafficLightFrame[] = "\n -   - \n|@| |D|\n -   - \n|@| |W|\n -   - \n|@|\n - \n";
+const char trafficLightFrame[] = "\n - \n|@|\n -   - \n|@| |D|\n -   - \n|@| |W|\n -   - \n";
 
 namespace Console
 {
@@ -42,39 +42,44 @@ namespace Console
 		{
 			switch (ch)
 			{
-			case 10:
-				if (Signals::CLightsStatus::StatusDetail()->GetStatusRed(lightSet))
-					SetConsoleTextAttribute(hConsole, RED);
-				else
-					SetConsoleTextAttribute(hConsole, NULL);
-				break;
-			case 14:
-				if (Signals::CLightsStatus::StatusDetail()->GetStatusWalk(lightSet))
-					SetConsoleTextAttribute(hConsole, NULL);
-				else
-					SetConsoleTextAttribute(hConsole, RED);
-				break;
-			case 26:
-				if (Signals::CLightsStatus::StatusDetail()->GetStatusAmber(lightSet))
-					SetConsoleTextAttribute(hConsole, AMBER);
-				else
-					SetConsoleTextAttribute(hConsole, NULL);
-				break;
-			case 30:
-				if (Signals::CLightsStatus::StatusDetail()->GetStatusWalk(lightSet))
-					SetConsoleTextAttribute(hConsole, GREEN);
-				else
-					SetConsoleTextAttribute(hConsole, NULL);
-				break;
-			case 42:
-				if (Signals::CLightsStatus::StatusDetail()->GetStatusGreen(lightSet))
-					SetConsoleTextAttribute(hConsole, GREEN);
-				else
-					SetConsoleTextAttribute(hConsole, NULL);
-				break;
-			default:
-				SetConsoleTextAttribute(hConsole, BACKGROUND_BLUE);
-				break;
+				// Main signals
+				case 6:
+					if (Signals::CLightsStatus::StatusDetail()->GetStatusRed(lightSet))
+						SetConsoleTextAttribute(hConsole, RED);
+					else
+						SetConsoleTextAttribute(hConsole, NULL);
+					break;
+				case 18:
+					if (Signals::CLightsStatus::StatusDetail()->GetStatusAmber(lightSet))
+						SetConsoleTextAttribute(hConsole, AMBER);
+					else
+						SetConsoleTextAttribute(hConsole, NULL);
+					break;
+				case 34:
+					if (Signals::CLightsStatus::StatusDetail()->GetStatusGreen(lightSet))
+						SetConsoleTextAttribute(hConsole, GREEN);
+					else
+						SetConsoleTextAttribute(hConsole, NULL);
+					break;
+
+				// Pedestrian signals
+				case 22:
+					if (Signals::CLightsStatus::StatusDetail()->GetStatusWalk(lightSet))
+						SetConsoleTextAttribute(hConsole, NULL);
+					else
+						SetConsoleTextAttribute(hConsole, RED);
+					break;
+				case 38:
+					if (Signals::CLightsStatus::StatusDetail()->GetStatusWalk(lightSet))
+						SetConsoleTextAttribute(hConsole, GREEN);
+					else
+						SetConsoleTextAttribute(hConsole, NULL);
+					break;
+
+				// Signal frame
+				default:
+					SetConsoleTextAttribute(hConsole, AMBER_BACKGROUND);
+					break;
 			}
 
 			putchar(lights[ch]);
@@ -126,8 +131,6 @@ namespace Console
 		hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
 		assert(hConsole != INVALID_HANDLE_VALUE || hConsole != NULL);
-
-		SetConsoleTextAttribute(hConsole, BACKGROUND_BLUE);
 
 		char lightsBuf[MAXBUF] = {0};
 

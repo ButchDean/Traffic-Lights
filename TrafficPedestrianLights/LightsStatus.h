@@ -20,22 +20,22 @@ namespace Signals
 
 		bool SystemIsReset();
 
-		void SetStatusWalk(const int lights);
-		void SetStatusRed(const int lights);
-		void SetStatusAmber(const int lights);
-		void SetStatusGreen(const int lights);
+		void SetStatusWalk(const unsigned short lights);
+		void SetStatusRed(const unsigned short lights);
+		void SetStatusAmber(const unsigned short lights);
+		void SetStatusGreen(const unsigned short lights);
 
-		void ClearStatusWalk(const int lights);
-		void ClearStatusRed(const int lights);
-		void ClearStatusAmber(const int lights);
-		void ClearStatusGreen(const int lights);
+		void ClearStatusWalk(const unsigned short lights);
+		void ClearStatusRed(const unsigned short lights);
+		void ClearStatusAmber(const unsigned short lights);
+		void ClearStatusGreen(const unsigned short lights);
 
-		bool GetStatusWalk(const int lights) const;
-		bool GetStatusRed(const int lights) const;
-		bool GetStatusAmber(const int lights) const;
-		bool GetStatusGreen(const int lights) const;
+		bool GetStatusWalk(const unsigned short lights) const;
+		bool GetStatusRed(const unsigned short lights) const;
+		bool GetStatusAmber(const unsigned short lights) const;
+		bool GetStatusGreen(const unsigned short lights) const;
 
-		int LightsCycled(int lSet);
+		unsigned short CycleLights(unsigned short lSet);
 
 		unsigned char GetSystemStatus() const
 		{
@@ -50,8 +50,10 @@ namespace Signals
 			lightsCycled ^= lightsCycled;
 		}
 
-		unsigned char systemStatus;
+		unsigned char systemStatus; // Bit 2, 5 Red. Bits 1, 4 Amber. Bits 0, 3 Green. Bits 6, 7 Walk/Don't Walk.
 		unsigned char lightsCycled;
+
+		bool _SignalSequence(const unsigned short OFFSET);
 
 	};
 }

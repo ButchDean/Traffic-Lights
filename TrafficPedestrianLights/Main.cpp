@@ -9,6 +9,8 @@ using namespace std;
 #define LIGHTSTATUS		Signals::CLightsStatus::StatusDetail()
 #define LIGHTSDISPLAY	Console::CConsoleOutput::ConsoleInst()
 
+extern HANDLE hConsole;
+
 int main()
 {
 	// Initialize state.
@@ -32,10 +34,12 @@ int main()
 			LIGHTSDISPLAY->UpdateDisplay(lightsSet);
 			LIGHTSDISPLAY->OutputDisplay();
 
-			lightsSet = LIGHTSTATUS->LightsCycled(lightsSet);
+			lightsSet = LIGHTSTATUS->CycleLights(lightsSet);
 		}
 
 	}
+
+	SetConsoleTextAttribute(hConsole, RED);
 
 	return 0;
 }

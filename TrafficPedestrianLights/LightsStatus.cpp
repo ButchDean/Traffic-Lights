@@ -12,7 +12,7 @@ namespace Signals
 		return true;
 	}
 
-	void CLightsStatus::SetStatusWalk(const int lights)
+	void CLightsStatus::SetStatusWalk(const unsigned short lights)
 	{
 		switch (lights)
 		{
@@ -27,7 +27,7 @@ namespace Signals
 		}
 	}
 
-	void CLightsStatus::SetStatusRed(const int lights)
+	void CLightsStatus::SetStatusRed(const unsigned short lights)
 	{
 		switch (lights)
 		{
@@ -42,7 +42,7 @@ namespace Signals
 		}
 	}
 
-	void CLightsStatus::SetStatusAmber(const int lights)
+	void CLightsStatus::SetStatusAmber(const unsigned short lights)
 	{
 		switch (lights)
 		{
@@ -57,7 +57,7 @@ namespace Signals
 		}
 	}
 
-	void CLightsStatus::SetStatusGreen(const int lights)
+	void CLightsStatus::SetStatusGreen(const unsigned short lights)
 	{
 		switch (lights)
 		{
@@ -72,7 +72,7 @@ namespace Signals
 		}
 	}
 
-	void CLightsStatus::ClearStatusWalk(const int lights)
+	void CLightsStatus::ClearStatusWalk(const unsigned short lights)
 	{
 		switch (lights)
 		{
@@ -87,7 +87,7 @@ namespace Signals
 		}
 	}
 
-	void CLightsStatus::ClearStatusRed(const int lights)
+	void CLightsStatus::ClearStatusRed(const unsigned short lights)
 	{
 		switch (lights)
 		{
@@ -102,7 +102,7 @@ namespace Signals
 		}
 	}
 
-	void CLightsStatus::ClearStatusAmber(const int lights)
+	void CLightsStatus::ClearStatusAmber(const unsigned short lights)
 	{
 		switch (lights)
 		{
@@ -117,7 +117,7 @@ namespace Signals
 		}
 	}
 
-	void CLightsStatus::ClearStatusGreen(const int lights)
+	void CLightsStatus::ClearStatusGreen(const unsigned short lights)
 	{
 		switch (lights)
 		{
@@ -132,7 +132,7 @@ namespace Signals
 		}
 	}
 
-	bool CLightsStatus::GetStatusWalk(const int lights) const
+	bool CLightsStatus::GetStatusWalk(const unsigned short lights) const
 	{
 		switch (lights)
 		{
@@ -153,7 +153,7 @@ namespace Signals
 		return false;
 	}
 
-	bool CLightsStatus::GetStatusRed(const int lights) const
+	bool CLightsStatus::GetStatusRed(const unsigned short lights) const
 	{
 		switch (lights)
 		{
@@ -174,7 +174,7 @@ namespace Signals
 		return false;
 	}
 
-	bool CLightsStatus::GetStatusAmber(const int lights) const
+	bool CLightsStatus::GetStatusAmber(const unsigned short lights) const
 	{
 		switch (lights)
 		{
@@ -195,7 +195,7 @@ namespace Signals
 		return false;
 	}
 
-	bool CLightsStatus::GetStatusGreen(const int lights) const
+	bool CLightsStatus::GetStatusGreen(const unsigned short lights) const
 	{
 		switch (lights)
 		{
@@ -216,28 +216,36 @@ namespace Signals
 		return false;
 	}
 
-	int CLightsStatus::LightsCycled(int lSet)
+	bool CLightsStatus::_SignalSequence(const unsigned short OFFSET)
+	{
+		if (systemStatus & SHIFTLEFT((1 + OFFSET)))
+			lightsCycled |= SHIFTLEFT((1 + OFFSET));
+
+		if (systemStatus & SHIFTLEFT((2 + OFFSET)))
+			lightsCycled |= SHIFTLEFT((2 + OFFSET));
+
+		if (lightsCycled & SHIFTLEFT((1 + OFFSET)) &&
+			lightsCycled & SHIFTLEFT((2 + OFFSET)))
+		{
+			lightsCycled &= ~SHIFTLEFT((0 + OFFSET));
+			lightsCycled &= ~SHIFTLEFT((1 + OFFSET));
+			lightsCycled &= ~SHIFTLEFT((2 + OFFSET));
+
+			return true;
+		}
+
+		return false;
+	}
+
+	unsigned short CLightsStatus::CycleLights(unsigned short lSet)
 	{
 		if (systemStatus & SHIFTLEFT(0))
 			lightsCycled |= SHIFTLEFT(0);
 
 		if ((lightsCycled & SHIFTLEFT(0)) && (lSet == 0))
 		{
-			if (systemStatus & SHIFTLEFT(1))
-				lightsCycled |= SHIFTLEFT(1);
-
-			if (systemStatus & SHIFTLEFT(2))
-				lightsCycled |= SHIFTLEFT(2);
-
-			if (lightsCycled & SHIFTLEFT(1) &&
-				lightsCycled & SHIFTLEFT(2))
-			{
-				lightsCycled &= ~SHIFTLEFT(0);
-				lightsCycled &= ~SHIFTLEFT(1);
-				lightsCycled &= ~SHIFTLEFT(2);
-
+			if(_SignalSequence(0))
 				return 1;
-			}
 		}
 
 		if (systemStatus & SHIFTLEFT(3))
@@ -245,21 +253,8 @@ namespace Signals
 
 		if ((lightsCycled & SHIFTLEFT(3)) && (lSet == 1))
 		{
-			if (systemStatus & SHIFTLEFT(4))
-				lightsCycled |= SHIFTLEFT(4);
-
-			if (systemStatus & SHIFTLEFT(5))
-				lightsCycled |= SHIFTLEFT(5);
-
-			if (lightsCycled & SHIFTLEFT(4) &&
-				lightsCycled & SHIFTLEFT(5))
-			{
-				lightsCycled &= ~SHIFTLEFT(3);
-				lightsCycled &= ~SHIFTLEFT(4);
-				lightsCycled &= ~SHIFTLEFT(5);
-
+			if(_SignalSequence(3))
 				return 0;
-			}
 		}
 
 		return lSet;
