@@ -216,46 +216,15 @@ namespace Signals
 		return false;
 	}
 
-	bool CLightsStatus::_SignalSequence(const unsigned short OFFSET)
-	{
-		if (systemStatus & SHIFTLEFT((1 + OFFSET)))
-			lightsCycled |= SHIFTLEFT((1 + OFFSET));
-
-		if (systemStatus & SHIFTLEFT((2 + OFFSET)))
-			lightsCycled |= SHIFTLEFT((2 + OFFSET));
-
-		if (lightsCycled & SHIFTLEFT((1 + OFFSET)) &&
-			lightsCycled & SHIFTLEFT((2 + OFFSET)))
-		{
-			lightsCycled &= ~SHIFTLEFT((0 + OFFSET));
-			lightsCycled &= ~SHIFTLEFT((1 + OFFSET));
-			lightsCycled &= ~SHIFTLEFT((2 + OFFSET));
-
-			return true;
-		}
-
-		return false;
-	}
-
 	unsigned short CLightsStatus::CycleLights(unsigned short lSet)
 	{
-		if (systemStatus & SHIFTLEFT(0))
-			lightsCycled |= SHIFTLEFT(0);
+		// Switch from cycling first set of signals to the second set.
+		if (lSet == 0 && GetStatusRed(0))
+			return 1;
 
-		if ((lightsCycled & SHIFTLEFT(0)) && (lSet == 0))
-		{
-			if(_SignalSequence(0))
-				return 1;
-		}
-
-		if (systemStatus & SHIFTLEFT(3))
-			lightsCycled |= SHIFTLEFT(3);
-
-		if ((lightsCycled & SHIFTLEFT(3)) && (lSet == 1))
-		{
-			if(_SignalSequence(3))
-				return 0;
-		}
+		// Switch from cycling second set of signals to the first.
+		if (lSet == 1 && GetStatusRed(1))
+			return 0;
 
 		return lSet;
 	}

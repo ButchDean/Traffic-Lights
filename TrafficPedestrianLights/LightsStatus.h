@@ -53,8 +53,6 @@ namespace Signals
 		unsigned char systemStatus; // Bit 2, 5 Red. Bits 1, 4 Amber. Bits 0, 3 Green. Bits 6, 7 Walk/Don't Walk.
 		unsigned char lightsCycled;
 
-		bool _SignalSequence(const unsigned short OFFSET);
-
 	};
 }
 

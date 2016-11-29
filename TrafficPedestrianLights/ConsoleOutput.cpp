@@ -89,39 +89,32 @@ namespace Console
 
 	void CConsoleOutput::UpdateDisplay(const int set)
 	{
-		if (Signals::CLightsStatus::StatusDetail()->GetStatusGreen(set))
+		if(Signals::CLightsStatus::StatusDetail()->GetStatusGreen(set))
 		{
 			Signals::CLightsStatus::StatusDetail()->ClearStatusGreen(set);
 			Signals::CLightsStatus::StatusDetail()->SetStatusAmber(set);
+			Signals::CLightsStatus::StatusDetail()->ClearStatusRed(set);
 
 			Signals::CLightsStatus::StatusDetail()->ClearStatusWalk(set);
 		}
 		else
-			if (Signals::CLightsStatus::StatusDetail()->GetStatusRed(set) &&
-				Signals::CLightsStatus::StatusDetail()->GetStatusAmber(set))
-			{
-				Signals::CLightsStatus::StatusDetail()->ClearStatusRed(set);
-				Signals::CLightsStatus::StatusDetail()->ClearStatusAmber(set);
-				Signals::CLightsStatus::StatusDetail()->SetStatusGreen(set);
+		if(Signals::CLightsStatus::StatusDetail()->GetStatusAmber(set))
+		{
+			Signals::CLightsStatus::StatusDetail()->ClearStatusGreen(set);
+			Signals::CLightsStatus::StatusDetail()->ClearStatusAmber(set);
+			Signals::CLightsStatus::StatusDetail()->SetStatusRed(set);
 
-				Signals::CLightsStatus::StatusDetail()->ClearStatusWalk(set);
-			}
-			else
-				if (Signals::CLightsStatus::StatusDetail()->GetStatusRed(set) &&
-					!Signals::CLightsStatus::StatusDetail()->GetStatusAmber(set))
-				{
-					Signals::CLightsStatus::StatusDetail()->SetStatusAmber(set);
+			Signals::CLightsStatus::StatusDetail()->SetStatusWalk(set);
+		}
+		else
+		if(Signals::CLightsStatus::StatusDetail()->GetStatusRed(set))
+		{
+			Signals::CLightsStatus::StatusDetail()->SetStatusGreen(set);
+			Signals::CLightsStatus::StatusDetail()->ClearStatusAmber(set);
+			Signals::CLightsStatus::StatusDetail()->ClearStatusRed(set);
 
-					Signals::CLightsStatus::StatusDetail()->ClearStatusWalk(set);
-				}
-				else
-					if (Signals::CLightsStatus::StatusDetail()->GetStatusAmber(set))
-					{
-						Signals::CLightsStatus::StatusDetail()->ClearStatusAmber(set);
-						Signals::CLightsStatus::StatusDetail()->SetStatusRed(set);
-
-						Signals::CLightsStatus::StatusDetail()->SetStatusWalk(set);
-					}
+			Signals::CLightsStatus::StatusDetail()->ClearStatusWalk(set);
+		}
 	}
 
 	void CConsoleOutput::OutputDisplay()
@@ -134,14 +127,12 @@ namespace Console
 
 		char lightsBuf[MAXBUF] = {0};
 
-		{
-			strcpy((char*)&lightsBuf, (char*)&trafficLightFrame);
-			ConfigureLightsAndDisplay(lightsBuf, 0);
-		}
+		// Render top set of signals.
+		strcpy((char*)&lightsBuf, (char*)&trafficLightFrame);
+		ConfigureLightsAndDisplay(lightsBuf, 0);
 
-		{
-			strcpy((char*)&lightsBuf, (char*)&trafficLightFrame);
-			ConfigureLightsAndDisplay(lightsBuf, 1);
-		}
+		// Render bottom set of signals.
+		strcpy((char*)&lightsBuf, (char*)&trafficLightFrame);
+		ConfigureLightsAndDisplay(lightsBuf, 1);
 	}
 }
