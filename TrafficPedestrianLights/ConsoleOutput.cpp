@@ -1,14 +1,14 @@
 #include "ConsoleOutput.h"
 #include "LightsTimer.h"
 #include "LightsStatus.h"
-#include <cassert>
+#include <cstring>
 
 #include <iostream>
 using namespace std;
 
 HANDLE hConsole;
 
-const char trafficLightFrame[] = "\n - \n|@|\n -   - \n|@| |D|\n -   - \n|@| |W|\n -   - \n";
+const string trafficLightFrame = "\n - \n|@|\n -   -- \n|@| |DW|\n -   -- \n|@| |WK|\n -   -- \n";
 
 namespace Console
 {
@@ -38,7 +38,7 @@ namespace Console
 
 	static void ConfigureLightsAndDisplay(char* lights, int lightSet)
 	{
-		for (unsigned int ch = 0; ch < strlen(trafficLightFrame); ch++)
+		for (unsigned int ch = 0; ch < trafficLightFrame.size(); ch++)
 		{
 			switch (ch)
 			{
@@ -49,13 +49,13 @@ namespace Console
 					else
 						SetConsoleTextAttribute(hConsole, NULL);
 					break;
-				case 18:
+				case 19:
 					if (Signals::CLightsStatus::StatusDetail()->GetStatusAmber(lightSet))
 						SetConsoleTextAttribute(hConsole, AMBER);
 					else
 						SetConsoleTextAttribute(hConsole, NULL);
 					break;
-				case 34:
+				case 37:
 					if (Signals::CLightsStatus::StatusDetail()->GetStatusGreen(lightSet))
 						SetConsoleTextAttribute(hConsole, GREEN);
 					else
@@ -63,13 +63,25 @@ namespace Console
 					break;
 
 				// Pedestrian signals
-				case 22:
+				case 23:
 					if (Signals::CLightsStatus::StatusDetail()->GetStatusWalk(lightSet))
 						SetConsoleTextAttribute(hConsole, NULL);
 					else
 						SetConsoleTextAttribute(hConsole, RED);
 					break;
-				case 38:
+				case 24:
+					if (Signals::CLightsStatus::StatusDetail()->GetStatusWalk(lightSet))
+						SetConsoleTextAttribute(hConsole, NULL);
+					else
+						SetConsoleTextAttribute(hConsole, RED);
+					break;
+				case 41:
+					if (Signals::CLightsStatus::StatusDetail()->GetStatusWalk(lightSet))
+						SetConsoleTextAttribute(hConsole, GREEN);
+					else
+						SetConsoleTextAttribute(hConsole, NULL);
+					break;
+				case 42:
 					if (Signals::CLightsStatus::StatusDetail()->GetStatusWalk(lightSet))
 						SetConsoleTextAttribute(hConsole, GREEN);
 					else
@@ -125,14 +137,10 @@ namespace Console
 
 		assert(hConsole != INVALID_HANDLE_VALUE || hConsole != NULL);
 
-		char lightsBuf[MAXBUF] = {0};
-
 		// Render top set of signals.
-		strcpy((char*)&lightsBuf, (char*)&trafficLightFrame);
-		ConfigureLightsAndDisplay(lightsBuf, 0);
+		ConfigureLightsAndDisplay((char*)trafficLightFrame.c_str(), 0);
 
 		// Render bottom set of signals.
-		strcpy((char*)&lightsBuf, (char*)&trafficLightFrame);
-		ConfigureLightsAndDisplay(lightsBuf, 1);
+		ConfigureLightsAndDisplay((char*)trafficLightFrame.c_str(), 1);
 	}
 }
