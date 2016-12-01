@@ -1,14 +1,14 @@
 #include "ConsoleOutput.h"
 #include "LightsTimer.h"
 #include "LightsStatus.h"
-#include <cassert>
+#include <cstring>
 
 #include <iostream>
 using namespace std;
 
 HANDLE hConsole;
 
-const char trafficLightFrame[] = "\n - \n|@|\n -   - \n|@| |D|\n -   - \n|@| |W|\n -   - \n";
+const string trafficLightFrame = "\n - \n|@|\n -   - \n|@| |D|\n -   - \n|@| |W|\n -   - \n";
 
 namespace Console
 {
@@ -38,7 +38,7 @@ namespace Console
 
 	static void ConfigureLightsAndDisplay(char* lights, int lightSet)
 	{
-		for (unsigned int ch = 0; ch < strlen(trafficLightFrame); ch++)
+		for (unsigned int ch = 0; ch < trafficLightFrame.size(); ch++)
 		{
 			switch (ch)
 			{
@@ -125,14 +125,10 @@ namespace Console
 
 		assert(hConsole != INVALID_HANDLE_VALUE || hConsole != NULL);
 
-		char lightsBuf[MAXBUF] = {0};
-
 		// Render top set of signals.
-		strcpy((char*)&lightsBuf, (char*)&trafficLightFrame);
-		ConfigureLightsAndDisplay(lightsBuf, 0);
+		ConfigureLightsAndDisplay((char*)trafficLightFrame.c_str(), 0);
 
 		// Render bottom set of signals.
-		strcpy((char*)&lightsBuf, (char*)&trafficLightFrame);
-		ConfigureLightsAndDisplay(lightsBuf, 1);
+		ConfigureLightsAndDisplay((char*)trafficLightFrame.c_str(), 1);
 	}
 }
