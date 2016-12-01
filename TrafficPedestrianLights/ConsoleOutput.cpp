@@ -8,7 +8,7 @@ using namespace std;
 
 HANDLE hConsole;
 
-const string trafficLightFrame = "\n - \n|@|\n -   -- \n|@| |D |\n -   -- \n|@| |W |\n -   -- \n";
+const string trafficLightFrame = "\n - \n|@|\n -   -- \n|@| |DW|\n -   -- \n|@| |WK|\n -   -- \n";
 
 namespace Console
 {
@@ -69,7 +69,19 @@ namespace Console
 					else
 						SetConsoleTextAttribute(hConsole, RED);
 					break;
+				case 24:
+					if (Signals::CLightsStatus::StatusDetail()->GetStatusWalk(lightSet))
+						SetConsoleTextAttribute(hConsole, NULL);
+					else
+						SetConsoleTextAttribute(hConsole, RED);
+					break;
 				case 41:
+					if (Signals::CLightsStatus::StatusDetail()->GetStatusWalk(lightSet))
+						SetConsoleTextAttribute(hConsole, GREEN);
+					else
+						SetConsoleTextAttribute(hConsole, NULL);
+					break;
+				case 42:
 					if (Signals::CLightsStatus::StatusDetail()->GetStatusWalk(lightSet))
 						SetConsoleTextAttribute(hConsole, GREEN);
 					else
