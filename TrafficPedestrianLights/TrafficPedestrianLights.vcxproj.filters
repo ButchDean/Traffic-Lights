@@ -27,6 +27,9 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CountdownTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleOutput.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LightsTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CountdownTimer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

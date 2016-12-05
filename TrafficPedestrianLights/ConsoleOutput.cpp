@@ -8,7 +8,9 @@ using namespace std;
 
 HANDLE hConsole;
 
-const string trafficLightFrame = "\n - \n|@|\n -   -- \n|@| |DW|\n -   -- \n|@| |WK|\n -   -- \n";
+static string countdown = "WK";
+
+static string trafficLightFrame = "\n - \n|@|\n -   -- \n|@| |DW|\n -   -- \n|@| |" + countdown + "|\n -   -- \n";
 
 namespace Console
 {
