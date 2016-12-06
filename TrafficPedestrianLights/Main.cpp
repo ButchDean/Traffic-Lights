@@ -1,10 +1,10 @@
 #include <windows.h>
-#include <iostream>
-using namespace std;
+#include <memory>
 
 #include "ConsoleOutput.h"
 #include "LightsStatus.h"
 #include "LightsTimer.h"
+#include "CountdownTimer.h"
 
 #define LIGHTSTATUS		Signals::CLightsStatus::StatusDetail()
 #define LIGHTSDISPLAY	Console::CConsoleOutput::ConsoleInst()
@@ -26,6 +26,9 @@ int main()
 	}
 
 	int lightsSet = 0;
+
+	// Init countdown timer.
+	std::unique_ptr<CountdownTimer::CTimer> countdown(new CountdownTimer::CTimer(10));
 
 	while(!(GetKeyState(VK_ESCAPE) & 0x80))
 	{
