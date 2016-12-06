@@ -1,5 +1,4 @@
 #include "ConsoleOutput.h"
-#include "LightsTimer.h"
 #include "LightsStatus.h"
 #include <cstring>
 

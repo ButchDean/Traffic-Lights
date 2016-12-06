@@ -3,7 +3,6 @@
 
 #include "ConsoleOutput.h"
 #include "LightsStatus.h"
-#include "LightsTimer.h"
 #include "CountdownTimer.h"
 
 #define LIGHTSTATUS		Signals::CLightsStatus::StatusDetail()
@@ -32,7 +31,7 @@ int main()
 
 	while(!(GetKeyState(VK_ESCAPE) & 0x80))
 	{
-		if(TimeElapsed(2))
+		if(countdown->UpdateSequence())
 		{
 			LIGHTSDISPLAY->UpdateDisplay(lightsSet);
 			LIGHTSDISPLAY->OutputDisplay();
