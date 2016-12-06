@@ -21,10 +21,10 @@
     <ClCompile Include="LightsStatus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LightsTimer.cpp">
+    <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="CountdownTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,7 +35,7 @@
     <ClInclude Include="LightsStatus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LightsTimer.h">
+    <ClInclude Include="CountdownTimer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

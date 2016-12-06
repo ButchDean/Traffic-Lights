@@ -97,14 +97,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleOutput.cpp" />
+    <ClCompile Include="CountdownTimer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="LightsStatus.cpp" />
-    <ClCompile Include="LightsTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleOutput.h" />
+    <ClInclude Include="CountdownTimer.h" />
     <ClInclude Include="LightsStatus.h" />
-    <ClInclude Include="LightsTimer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

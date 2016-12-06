@@ -1,5 +1,4 @@
 #include "ConsoleOutput.h"
-#include "LightsTimer.h"
 #include "LightsStatus.h"
 #include <cstring>
 
@@ -8,7 +7,9 @@ using namespace std;
 
 HANDLE hConsole;
 
-const string trafficLightFrame = "\n - \n|@|\n -   -- \n|@| |DW|\n -   -- \n|@| |WK|\n -   -- \n";
+static string countdown = "WK";
+
+static string trafficLightFrame = "\n - \n|@|\n -   -- \n|@| |DW|\n -   -- \n|@| |" + countdown + "|\n -   -- \n";
 
 namespace Console
 {
@@ -36,7 +37,7 @@ namespace Console
 		SetConsoleCursorPosition(hConsole, coordScreen);
 	}
 
-	static void ConfigureLightsAndDisplay(char* lights, int lightSet)
+	void CConsoleOutput::ConfigureLightsAndDisplay(char* lights, int lightSet)
 	{
 		for (unsigned int ch = 0; ch < trafficLightFrame.size(); ch++)
 		{
@@ -44,19 +45,19 @@ namespace Console
 			{
 				// Main signals
 				case 6:
-					if (Signals::CLightsStatus::StatusDetail()->GetStatusRed(lightSet))
+					if (localStatus->GetStatusRed(lightSet))
 						SetConsoleTextAttribute(hConsole, RED);
 					else
 						SetConsoleTextAttribute(hConsole, NULL);
 					break;
 				case 19:
-					if (Signals::CLightsStatus::StatusDetail()->GetStatusAmber(lightSet))
+					if (localStatus->GetStatusAmber(lightSet))
 						SetConsoleTextAttribute(hConsole, AMBER);
 					else
 						SetConsoleTextAttribute(hConsole, NULL);
 					break;
 				case 37:
-					if (Signals::CLightsStatus::StatusDetail()->GetStatusGreen(lightSet))
+					if (localStatus->GetStatusGreen(lightSet))
 						SetConsoleTextAttribute(hConsole, GREEN);
 					else
 						SetConsoleTextAttribute(hConsole, NULL);
@@ -64,25 +65,25 @@ namespace Console
 
 				// Pedestrian signals
 				case 23:
-					if (Signals::CLightsStatus::StatusDetail()->GetStatusWalk(lightSet))
+					if (localStatus->GetStatusWalk(lightSet))
 						SetConsoleTextAttribute(hConsole, NULL);
 					else
 						SetConsoleTextAttribute(hConsole, RED);
 					break;
 				case 24:
-					if (Signals::CLightsStatus::StatusDetail()->GetStatusWalk(lightSet))
+					if (localStatus->GetStatusWalk(lightSet))
 						SetConsoleTextAttribute(hConsole, NULL);
 					else
 						SetConsoleTextAttribute(hConsole, RED);
 					break;
 				case 41:
-					if (Signals::CLightsStatus::StatusDetail()->GetStatusWalk(lightSet))
+					if (localStatus->GetStatusWalk(lightSet))
 						SetConsoleTextAttribute(hConsole, GREEN);
 					else
 						SetConsoleTextAttribute(hConsole, NULL);
 					break;
 				case 42:
-					if (Signals::CLightsStatus::StatusDetail()->GetStatusWalk(lightSet))
+					if (localStatus->GetStatusWalk(lightSet))
 						SetConsoleTextAttribute(hConsole, GREEN);
 					else
 						SetConsoleTextAttribute(hConsole, NULL);
@@ -101,31 +102,31 @@ namespace Console
 
 	void CConsoleOutput::UpdateDisplay(const int set)
 	{
-		if(Signals::CLightsStatus::StatusDetail()->GetStatusGreen(set))
+		if(localStatus->GetStatusGreen(set))
 		{
-			Signals::CLightsStatus::StatusDetail()->ClearStatusGreen(set);
-			Signals::CLightsStatus::StatusDetail()->SetStatusAmber(set);
-			Signals::CLightsStatus::StatusDetail()->ClearStatusRed(set);
+			localStatus->ClearStatusGreen(set);
+			localStatus->SetStatusAmber(set);
+			localStatus->ClearStatusRed(set);
 
-			Signals::CLightsStatus::StatusDetail()->ClearStatusWalk(set);
+			localStatus->ClearStatusWalk(set);
 		}
 		else
-		if(Signals::CLightsStatus::StatusDetail()->GetStatusAmber(set))
+		if(localStatus->GetStatusAmber(set))
 		{
-			Signals::CLightsStatus::StatusDetail()->ClearStatusGreen(set);
-			Signals::CLightsStatus::StatusDetail()->ClearStatusAmber(set);
-			Signals::CLightsStatus::StatusDetail()->SetStatusRed(set);
+			localStatus->ClearStatusGreen(set);
+			localStatus->ClearStatusAmber(set);
+			localStatus->SetStatusRed(set);
 
-			Signals::CLightsStatus::StatusDetail()->SetStatusWalk(set);
+			localStatus->SetStatusWalk(set);
 		}
 		else
-		if(Signals::CLightsStatus::StatusDetail()->GetStatusRed(set))
+		if(localStatus->GetStatusRed(set))
 		{
-			Signals::CLightsStatus::StatusDetail()->SetStatusGreen(set);
-			Signals::CLightsStatus::StatusDetail()->ClearStatusAmber(set);
-			Signals::CLightsStatus::StatusDetail()->ClearStatusRed(set);
+			localStatus->SetStatusGreen(set);
+			localStatus->ClearStatusAmber(set);
+			localStatus->ClearStatusRed(set);
 
-			Signals::CLightsStatus::StatusDetail()->ClearStatusWalk(set);
+			localStatus->ClearStatusWalk(set);
 		}
 	}
 
