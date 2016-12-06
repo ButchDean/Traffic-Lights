@@ -5,38 +5,37 @@
 #include "LightsStatus.h"
 #include "CountdownTimer.h"
 
-#define LIGHTSTATUS		Signals::CLightsStatus::StatusDetail()
-#define LIGHTSDISPLAY	Console::CConsoleOutput::ConsoleInst()
-
 extern HANDLE hConsole;
 
 int main()
 {
-	// Initialize state.
-	if(LIGHTSTATUS->SystemIsReset())
-	{
-		LIGHTSTATUS->SetStatusRed(1);
-		LIGHTSTATUS->SetStatusAmber(0);
-
-		LIGHTSTATUS->SetStatusWalk(0);
-		LIGHTSTATUS->SetStatusWalk(1);
-
-		LIGHTSDISPLAY->OutputDisplay();
-	}
-
-	int lightsSet = 0;
-
+	std::shared_ptr<Signals::CLightsStatus> signal(new Signals::CLightsStatus);
+	std::unique_ptr<Console::CConsoleOutput> consoleOut(new Console::CConsoleOutput(signal));
+	
 	// Init countdown timer.
 	std::unique_ptr<CountdownTimer::CTimer> countdown(new CountdownTimer::CTimer(10));
+	int lightsSet = 0;
+
+	// Initialize state.
+	if(signal->SystemIsReset())
+	{
+		signal->SetStatusRed(1);
+		signal->SetStatusAmber(0);
+
+		signal->SetStatusWalk(0);
+		signal->SetStatusWalk(1);
+
+		consoleOut->OutputDisplay();
+	}
 
 	while(!(GetKeyState(VK_ESCAPE) & 0x80))
 	{
 		if(countdown->UpdateSequence())
 		{
-			LIGHTSDISPLAY->UpdateDisplay(lightsSet);
-			LIGHTSDISPLAY->OutputDisplay();
+			consoleOut->UpdateDisplay(lightsSet);
+			consoleOut->OutputDisplay();
 
-			lightsSet = LIGHTSTATUS->CycleLights(lightsSet);
+			lightsSet = signal->CycleLights(lightsSet);
 		}
 
 	}
