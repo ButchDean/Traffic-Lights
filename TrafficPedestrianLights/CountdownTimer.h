@@ -22,9 +22,11 @@ namespace CountdownTimer
 
 		std::chrono::steady_clock::time_point start, end;
 		std::chrono::duration<double> elapsed_secs;
-		const double TIME_DELTA = 1.0;
+		const double CYCLE_DELTA = 2.0;
 
 		unsigned int duration;
+
+		void _UpdateTimer();
 	};
 }
 

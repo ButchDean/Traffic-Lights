@@ -2,12 +2,17 @@
 
 namespace CountdownTimer
 {
-	bool CTimer::UpdateSequence()
+	void CTimer::_UpdateTimer()
 	{
 		end = std::chrono::steady_clock::now();
 		elapsed_secs = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
+	}
 
-		if(elapsed_secs.count() >= TIME_DELTA)
+	bool CTimer::UpdateSequence()
+	{
+		_UpdateTimer();
+
+		if(elapsed_secs.count() >= CYCLE_DELTA)
 		{
 			start = std::chrono::steady_clock::now();
 
