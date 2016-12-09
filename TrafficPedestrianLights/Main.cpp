@@ -37,7 +37,6 @@ int main()
 
 			lightsSet = signal->CycleLights(lightsSet);
 		}
-
 	}
 
 	SetConsoleTextAttribute(hConsole, RED);

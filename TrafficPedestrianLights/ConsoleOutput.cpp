@@ -1,18 +1,18 @@
 #include "ConsoleOutput.h"
 #include "LightsStatus.h"
-#include <cstring>
 
 #include <iostream>
 using namespace std;
 
 HANDLE hConsole;
 
-static string countdown = "WK";
-
-static string trafficLightFrame = "\n - \n|@|\n -   -- \n|@| |DW|\n -   -- \n|@| |" + countdown + "|\n -   -- \n";
-
 namespace Console
 {
+	void CConsoleOutput::_UpdateCountDownTimer()
+	{
+		countdown = "00";
+	}
+
 	static void ClearScreen()
 	{
 		COORD coordScreen = {0, 0};
@@ -137,6 +137,10 @@ namespace Console
 		hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
 		assert(hConsole != INVALID_HANDLE_VALUE || hConsole != NULL);
+
+		_UpdateCountDownTimer();
+
+		trafficLightFrame = SIGFRAMEPT1 + countdown + SIGFRAMEPT2;
 
 		// Render top set of signals.
 		ConfigureLightsAndDisplay((char*)trafficLightFrame.c_str(), 0);

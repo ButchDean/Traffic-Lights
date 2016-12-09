@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <cassert>
 #include <memory>
+#include <string>
 #include "LightsStatus.h"
 
 #define RED		FOREGROUND_RED | FOREGROUND_INTENSITY
@@ -22,18 +23,27 @@ namespace Console
 		CConsoleOutput(std::shared_ptr<Signals::CLightsStatus> ls) 
 		{
 			localStatus = ls;
+
+			countdown = "WK";
+			trafficLightFrame = SIGFRAMEPT1 + countdown + SIGFRAMEPT2;
 		}
 		~CConsoleOutput() {}
 
 		void ConfigureLightsAndDisplay(char* lights, int lightSet);
-
 		void UpdateDisplay(const int set);
 		void OutputDisplay();
 
 	private:
 
+		std::string countdown;
+		std::string trafficLightFrame;
+
 		std::shared_ptr<Signals::CLightsStatus> localStatus;
 
+		const std::string SIGFRAMEPT1 = "\n - \n|@|\n -   -- \n|@| |DW|\n -   -- \n|@| |";
+		const std::string SIGFRAMEPT2 = "|\n -   -- \n";
+
+		void _UpdateCountDownTimer();
 	};
 }
 #endif
