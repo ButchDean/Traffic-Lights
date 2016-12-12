@@ -7,6 +7,7 @@
 #include <memory>
 #include <string>
 #include "LightsStatus.h"
+#include "CountdownTimer.h"
 
 #define RED		FOREGROUND_RED | FOREGROUND_INTENSITY
 #define AMBER	FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY
@@ -20,9 +21,10 @@ namespace Console
 	{
 	public:
 
-		CConsoleOutput(std::shared_ptr<Signals::CLightsStatus> ls) 
+		CConsoleOutput(std::shared_ptr<Signals::CLightsStatus> ls, std::shared_ptr<CountdownTimer::CTimer> lt)
 		{
 			localStatus = ls;
+			localTimer = lt;
 
 			countdown = "WK";
 			trafficLightFrame = SIGFRAMEPT1 + countdown + SIGFRAMEPT2;
@@ -39,6 +41,7 @@ namespace Console
 		std::string trafficLightFrame;
 
 		std::shared_ptr<Signals::CLightsStatus> localStatus;
+		std::shared_ptr<CountdownTimer::CTimer> localTimer;
 
 		const std::string SIGFRAMEPT1 = "\n - \n|@|\n -   -- \n|@| |DW|\n -   -- \n|@| |";
 		const std::string SIGFRAMEPT2 = "|\n -   -- \n";
