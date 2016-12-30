@@ -2,7 +2,6 @@
 #define _CONSOLE_OUTPUT_
 
 #include <windows.h>
-#include <stdio.h>
 #include <cassert>
 #include <memory>
 #include <string>

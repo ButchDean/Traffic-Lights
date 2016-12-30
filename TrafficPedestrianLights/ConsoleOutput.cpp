@@ -1,8 +1,7 @@
 #include "ConsoleOutput.h"
 #include "LightsStatus.h"
 
-#include <iostream>
-using namespace std;
+#include <cstdio>
 
 HANDLE hConsole;
 
@@ -10,6 +9,11 @@ namespace Console
 {
 	void CConsoleOutput::_UpdateCountDownTimer()
 	{
+		static unsigned int remainingSecs = 10;
+		char* strCountdown = nullptr;
+
+		//std::asprintf()
+
 		countdown = "00";
 	}
 
