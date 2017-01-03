@@ -32,6 +32,6 @@ namespace CountdownTimer
 	{
 		_UpdateTimer();
 
-		return false;
+		return _UpdateTrigger(COUNTDOWN_DELTA);
 	}
 }
