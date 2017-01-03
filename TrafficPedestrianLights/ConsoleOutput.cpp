@@ -22,12 +22,14 @@ namespace Console
 		}
 
 		// Get most significant digit
-		strCountdown[0] = 0x30 + std::floor(remainingSecs / 10);
+		strCountdown[0] = 0x30 + static_cast<int>(std::ceil(remainingSecs / 10));
 
 		// Get least significant digit
-		strCountdown[1] = 0x30 + (remainingSecs - std::floor(remainingSecs / 10) * 10);
+		strCountdown[1] = 0x30 + static_cast<int>((remainingSecs - std::ceil(remainingSecs / 10) * 10));
 
 		countdown = std::string(strCountdown);
+
+
 	}
 
 	static void ClearScreen()
