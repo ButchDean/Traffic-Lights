@@ -20,7 +20,7 @@ namespace CountdownTimer
 		bool UpdateSequence();
 		bool UpdateCountdown();
 
-		static int GetCountdownUpperBound();
+		int GetCountdownUpperBound() const;
 
 	private:
 
@@ -28,7 +28,7 @@ namespace CountdownTimer
 		std::chrono::duration<double> elapsed_secs;
 		const double CYCLE_DELTA = 2.0;
 		const double COUNTDOWN_DELTA = 1.0;
-		static const unsigned int TOTAL_SECS = 10;
+		const unsigned int TOTAL_SECS = 10;
 
 		void _UpdateTimer();
 		bool _UpdateTrigger(const double DELTA);

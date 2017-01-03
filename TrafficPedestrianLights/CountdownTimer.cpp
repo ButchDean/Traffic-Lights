@@ -35,7 +35,7 @@ namespace CountdownTimer
 		return _UpdateTrigger(COUNTDOWN_DELTA);
 	}
 
-	int CTimer::GetCountdownUpperBound()
+	int CTimer::GetCountdownUpperBound() const
 	{
 		return TOTAL_SECS;
 	}

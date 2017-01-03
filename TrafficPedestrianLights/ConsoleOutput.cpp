@@ -1,8 +1,9 @@
+#include <cstdio>
+#include <cmath>
+
 #include "ConsoleOutput.h"
 #include "LightsStatus.h"
 #include "CountdownTimer.h"
-
-#include <cstdio>
 
 HANDLE hConsole;
 
@@ -10,14 +11,23 @@ namespace Console
 {
 	void CConsoleOutput::_UpdateCountDownTimer()
 	{
-		static unsigned int remainingSecs = CountdownTimer::CTimer::GetCountdownUpperBound();
-		char* strCountdown = nullptr;
+		static unsigned int remainingSecs = GetCountdownUpperBound();
+		char strCountdown[3] = {0};
 
-		//std::asprintf()
+		if (remainingSecs > 99)
+		{
+			std::perror("C'mon man! Nobody is going to wait for more than 1 minute 39 seconds!");
 
-		//if()
+			return;
+		}
 
-		countdown = "00";
+		// Get first digit
+		strCountdown[0] = 0x30 + std::floor(remainingSecs / 10);
+
+		// Get second digit
+		strCountdown[1] = 0x30 + (remainingSecs - std::floor(remainingSecs / 10));
+
+		countdown = std::string(strCountdown);
 	}
 
 	static void ClearScreen()
