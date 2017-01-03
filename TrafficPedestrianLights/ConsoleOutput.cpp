@@ -15,6 +15,8 @@ namespace Console
 
 		//std::asprintf()
 
+		//if()
+
 		countdown = "00";
 	}
 

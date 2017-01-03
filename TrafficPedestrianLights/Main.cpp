@@ -9,9 +9,9 @@ extern HANDLE hConsole;
 
 int main()
 {
-	std::shared_ptr<CountdownTimer::CTimer> countdown(new CountdownTimer::CTimer(10));
+	//std::shared_ptr<CountdownTimer::CTimer> countdown(new CountdownTimer::CTimer(10));
 	std::shared_ptr<Signals::CLightsStatus> signal(new Signals::CLightsStatus);
-	std::unique_ptr<Console::CConsoleOutput> consoleOut(new Console::CConsoleOutput(signal, countdown));
+	std::unique_ptr<Console::CConsoleOutput> consoleOut(new Console::CConsoleOutput(signal));
 	
 	int lightsSet = 0;
 
@@ -29,7 +29,7 @@ int main()
 
 	while(!(GetKeyState(VK_ESCAPE) & 0x80))
 	{
-		if(countdown->UpdateSequence())
+		if(consoleOut->UpdateSequence())
 		{
 			consoleOut->UpdateDisplay(lightsSet);
 			consoleOut->OutputDisplay();

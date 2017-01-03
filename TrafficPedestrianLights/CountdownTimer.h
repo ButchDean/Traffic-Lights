@@ -10,7 +10,7 @@ namespace CountdownTimer
 	{
 	public:
 
-		CTimer(const unsigned int TIMERDURATION) : duration(TIMERDURATION) 
+		CTimer()
 		{
 			// Seed the clock
 			start = std::chrono::steady_clock::now();
@@ -29,8 +29,6 @@ namespace CountdownTimer
 		const double CYCLE_DELTA = 2.0;
 		const double COUNTDOWN_DELTA = 1.0;
 		static const unsigned int TOTAL_SECS = 10;
-
-		unsigned int duration;
 
 		void _UpdateTimer();
 		bool _UpdateTrigger(const double DELTA);

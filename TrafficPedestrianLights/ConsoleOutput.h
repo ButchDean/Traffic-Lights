@@ -16,14 +16,13 @@
 
 namespace Console
 {
-	class CConsoleOutput
+	class CConsoleOutput : public CountdownTimer::CTimer
 	{
 	public:
 
-		CConsoleOutput(std::shared_ptr<Signals::CLightsStatus> ls, std::shared_ptr<CountdownTimer::CTimer> lt)
+		CConsoleOutput(std::shared_ptr<Signals::CLightsStatus> ls)
 		{
 			localStatus = ls;
-			localTimer = lt;
 
 			countdown = "WK";
 			trafficLightFrame = SIGFRAMEPT1 + countdown + SIGFRAMEPT2;
