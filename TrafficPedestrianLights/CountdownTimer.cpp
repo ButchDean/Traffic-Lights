@@ -8,11 +8,9 @@ namespace CountdownTimer
 		elapsed_secs = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
 	}
 
-	bool CTimer::UpdateSequence()
+	bool CTimer::_UpdateTrigger(const double DELTA)
 	{
-		_UpdateTimer();
-
-		if(elapsed_secs.count() >= CYCLE_DELTA)
+		if (elapsed_secs.count() >= DELTA)
 		{
 			start = std::chrono::steady_clock::now();
 
@@ -22,10 +20,18 @@ namespace CountdownTimer
 		return false;
 	}
 
+
+	bool CTimer::UpdateSequence()
+	{
+		_UpdateTimer();
+
+		return _UpdateTrigger(CYCLE_DELTA);
+	}
+
 	bool CTimer::UpdateCountdown()
 	{
 		_UpdateTimer();
 
-
+		return false;
 	}
 }

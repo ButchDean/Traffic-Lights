@@ -29,6 +29,7 @@ namespace CountdownTimer
 		unsigned int duration;
 
 		void _UpdateTimer();
+		bool _UpdateTrigger(const double DELTA);
 	};
 }
 
