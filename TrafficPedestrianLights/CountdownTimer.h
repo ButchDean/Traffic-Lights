@@ -12,11 +12,13 @@ namespace CountdownTimer
 
 		CTimer(const unsigned int TIMERDURATION) : duration(TIMERDURATION) 
 		{
+			// Seed the clock
 			start = std::chrono::steady_clock::now();
 		}
 		~CTimer() {}
 
 		bool UpdateSequence();
+		bool UpdateCountdown();
 
 	private:
 

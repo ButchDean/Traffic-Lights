@@ -21,4 +21,11 @@ namespace CountdownTimer
 
 		return false;
 	}
+
+	bool CTimer::UpdateCountdown()
+	{
+		_UpdateTimer();
+
+
+	}
 }
