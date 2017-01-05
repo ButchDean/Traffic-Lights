@@ -39,4 +39,12 @@ namespace CountdownTimer
 	{
 		return TOTAL_SECS;
 	}
+
+	bool CTimer::CountdownLock() const
+	{
+		if(remainingSecs > 0)
+			return true;
+
+		return false;
+	}
 }

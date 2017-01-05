@@ -22,6 +22,8 @@ namespace CountdownTimer
 
 		int GetCountdownUpperBound() const;
 
+		bool CountdownLock() const;
+
 	protected:
 
 		unsigned int remainingSecs;
