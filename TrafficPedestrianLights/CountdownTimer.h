@@ -22,6 +22,10 @@ namespace CountdownTimer
 
 		int GetCountdownUpperBound() const;
 
+	protected:
+
+		unsigned int remainingSecs;
+
 	private:
 
 		std::chrono::steady_clock::time_point start, end;
