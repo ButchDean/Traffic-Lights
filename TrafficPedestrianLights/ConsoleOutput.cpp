@@ -9,7 +9,7 @@ HANDLE hConsole;
 
 namespace Console
 {
-	void CConsoleOutput::_UpdateCountDownTimer()
+	void CConsoleOutput::_UpdateCountdownTimer()
 	{
 		remainingSecs = GetCountdownUpperBound();
 		char strCountdown[3] = {0};
@@ -158,7 +158,7 @@ namespace Console
 
 		assert(hConsole != INVALID_HANDLE_VALUE || hConsole != NULL);
 
-		_UpdateCountDownTimer();
+		_UpdateCountdownTimer();
 
 		trafficLightFrame = SIGFRAMEPT1 + countdown + SIGFRAMEPT2;
 

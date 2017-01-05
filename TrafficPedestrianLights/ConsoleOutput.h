@@ -44,7 +44,7 @@ namespace Console
 		const std::string SIGFRAMEPT1 = "\n - \n|@|\n -   -- \n|@| |DW|\n -   -- \n|@| |";
 		const std::string SIGFRAMEPT2 = "|\n -   -- \n";
 
-		void _UpdateCountDownTimer();
+		void _UpdateCountdownTimer();
 	};
 }
 #endif
