@@ -5,14 +5,14 @@ namespace CountdownTimer
 	void CTimer::_UpdateTimer()
 	{
 		end = std::chrono::steady_clock::now();
-		elapsed_secs = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
+		elapsedSecs = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
 	}
 
 	bool CTimer::_UpdateTrigger(const double DELTA)
 	{
-		if (elapsed_secs.count() >= DELTA)
+		if(elapsedSecs.count() >= DELTA)
 		{
-			start = std::chrono::steady_clock::now();
+			start = std::chrono::steady_clock::now(); // Fails to update countdown timer bug.
 
 			return true;
 		}
