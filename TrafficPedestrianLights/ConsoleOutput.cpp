@@ -11,7 +11,9 @@ namespace Console
 {
 	void CConsoleOutput::_UpdateCountdownTimer()
 	{
-		remainingSecs = GetCountdownUpperBound();
+		if(countdown == "WK")
+			remainingSecs = GetCountdownUpperBound();
+
 		char strCountdown[3] = {0};
 
 		if (remainingSecs > 99)

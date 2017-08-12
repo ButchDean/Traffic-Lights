@@ -8,6 +8,9 @@
 *.sln.docstates
 *.sln~*
 
+# SDKs or APIs use for this project
+boost/
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

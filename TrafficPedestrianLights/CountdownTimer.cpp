@@ -12,7 +12,7 @@ namespace CountdownTimer
 	{
 		if(elapsedSecs.count() >= DELTA)
 		{
-			start = std::chrono::steady_clock::now(); // Fails to update countdown timer bug.
+			start = std::chrono::steady_clock::now();
 
 			return true;
 		}
